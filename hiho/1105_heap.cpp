@@ -13,6 +13,7 @@ struct cmp{
 };
 
 int main(){
+	//max_priority_queue
 	priority_queue<candy,vector<candy>,cmp> candy_queue;
 	int N;
 	cin >>N;
