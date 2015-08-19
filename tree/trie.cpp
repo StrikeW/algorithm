@@ -1,3 +1,7 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
 class TrieNode {
 public:
     // Initialize your data structure here.
@@ -26,10 +30,10 @@ public:
         TrieNode* iter=root;
         int curr=0;
         while(curr<sz){
-            if(root->next[word[curr]-'a']==NULL){
-                root->next[word[curr]-'a']=new TrieNode();
+            if(iter->next[word[curr]-'a']==NULL){
+                iter->next[word[curr]-'a']=new TrieNode();
             }
-            iter=root->next[word[curr]-'a'];
+            iter=iter->next[word[curr]-'a'];
             curr++;
         }
         iter->exist=true;
@@ -43,10 +47,10 @@ public:
         TrieNode* iter=root;
         int curr=0;
         while(curr<sz){
-            if(root->next[word[curr]-'a']==NULL){
+            if(iter->next[word[curr]-'a']==NULL){
                 return false;
             }
-            iter=root->next[word[curr]-'a'];
+            iter=iter->next[word[curr]-'a'];
             curr++;
         }
         return iter->exist;
@@ -61,10 +65,10 @@ public:
         TrieNode* iter=root;
         int curr=0;
         while(curr<sz){
-            if(root->next[prefix[curr]-'a']==NULL){
+            if(iter->next[prefix[curr]-'a']==NULL){
                 return false;
             }
-            iter=root->next[prefix[curr]-'a'];
+            iter=iter->next[prefix[curr]-'a'];
             curr++;
         }
         return true;
@@ -73,3 +77,21 @@ public:
 private:
     TrieNode* root;
 };
+
+
+
+int main(){
+    Trie trie;
+    trie.insert("app");
+    trie.insert("apple");
+    trie.insert("beer");
+    trie.insert("addd");
+
+    cout<<trie.search("apps")<<endl;
+    cout<<trie.search("a")<<endl;
+    cout<<trie.search("ap")<<endl;
+    cout<<trie.search("app")<<endl;
+    cout<<trie.search("appl")<<endl;
+    cout<<trie.search("ad")<<endl;
+
+}
