@@ -22,7 +22,8 @@ bool cmp(int a,int b){
 }
 void sort(){
 	int a[] = {3,-2,5,-4,1};
-    vector<int> v2(a,a+5);
+	int a_len=sizeof(a)/sizeof(a[0]);
+    vector<int> v2(a,a+a_len);
     sort(v2.begin(),v2.end());
     for(int i=0;i<v2.size();i++)
 		cout<<v2[i]<<endl;
@@ -35,5 +36,5 @@ void sort(){
 
 int main(){
 	//init();
-	//sort();
+	sort();
 }
