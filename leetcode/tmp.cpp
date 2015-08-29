@@ -1,4 +1,6 @@
 #include <vector>
+#include <string>
+
 #include <iostream>
 #include <queue>
 #include <vector>
@@ -7,67 +9,43 @@
 using namespace std;
 
 
-struct TreeNode {
-      int val;
-      TreeNode *left;
-      TreeNode *right;
-      TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode(int x) : val(x), next(NULL) {}
+ };
 
 class Solution {
 public:
-    int binary_search_left(vector<int>& nums, int target,int start,int end){
-        if(start>=end)
-            return -1;
-        if(start+1==end){
-            if(nums[start]==target)
-                return start;
-            return -1;
+    int lengthOfLongestSubstring(string s) {
+        if(s.size()<=1)
+            return s.size();
+        vector<int> pos_table(256,-1);
+        int max=1;
+        int curr_len=1;
+        pos_table[s[0]]=0;
+        for(int i=1;i<s.size();i++){
+            if(pos_table[s[i]]<i-curr_len){
+                curr_len++;
+            } else {
+                curr_len=i-pos_table[s[i]];
+            }
+            if(curr_len>max)
+                max=curr_len;
+            pos_table[s[i]]=i;
         }
-        int mid=(start+end)/2;
-        if(nums[mid]<target)
-            return binary_search_left(nums,target,mid+1,end);
-        if(nums[mid]>target)
-            return binary_search_left(nums,target,start,mid);
-        if(nums[mid]==target){
-            int r=binary_search_left(nums,target,start,mid);
-            if(r==-1)
-                return mid;
-            return r;
-        }
-    }
-    int binary_search_right(vector<int>& nums, int target,int start,int end){
-        if(start>=end)
-            return -1;
-        if(start+1==end){
-            if(nums[start]==target)
-                return start;
-            return -1;
-        }
-        int mid=(start+end)/2;
-        if(nums[mid]<target)
-            return binary_search_right(nums,target,mid+1,end);
-        if(nums[mid]>target)
-            return binary_search_right(nums,target,start,mid);
-        if(nums[mid]==target){
-            int r=binary_search_right(nums,target,mid+1,end);
-            if(r==-1)
-                return mid;
-            return r;
-        }
-    }
-    vector<int> searchRange(vector<int>& nums, int target) {
-        vector<int> result;
-        result.push_back(binary_search_left(nums,target,0,nums.size()));
-        result.push_back(binary_search_right(nums,target,0,nums.size()));
-        return result;
+        return max;
     }
 };
 
 
 int main(){
-    int arr[]={1};
-    vector<int> nums(arr,arr+sizeof(arr)/sizeof(arr[0]));
+    int arr[]={10,5,13,4,8,4,5,11,14,9,16,10,20,8};
+    vector<int> v(arr,arr+sizeof(arr)/sizeof(arr[0]));
+    
+    string s1="abcabcbb";
+    string s2="bbbbb";
     Solution s;
-    cout<<s.searchRange(nums,1).size()<<endl;
+    cout<<s.lengthOfLongestSubstring(s1)<<endl;
+    cout<<s.lengthOfLongestSubstring(s2)<<endl;
 }
