@@ -1,9 +1,12 @@
 #include <iostream>
 #include <deque>
-
+//	deque has following methods:
+//	front(),back()
+//	push_front(),pop_front(),push_back(),pop_back()
 #include <queue>
 //	queue has following methods:
-//	push(),front(),back(),pop()
+//	front(),back()
+//	push(),pop()
 
 using namespace std;
 
