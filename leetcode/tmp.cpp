@@ -17,26 +17,31 @@ struct ListNode {
 
 class Solution {
 public:
-    int lengthOfLongestSubstring(string s) {
-        if(s.size()<=1)
-            return s.size();
-        vector<int> pos_table(256,-1);
-        int max=1;
-        int curr_len=1;
-        pos_table[s[0]]=0;
-        for(int i=1;i<s.size();i++){
-            if(pos_table[s[i]]<i-curr_len){
-                curr_len++;
-            } else {
-                curr_len=i-pos_table[s[i]];
+    string countAndSay(int n) {
+        string prev="1";
+        while(n>1){
+            n--;
+            string next="";
+            int pos=1;
+            int count=1;
+            while(pos<prev.size()){
+                if(prev[pos]==prev[pos-1]){
+                    count++;
+                } else {
+                    next=next+to_string(count);
+                    next=next+prev[pos-1];
+                    count=1;
+                }
+                pos++;
             }
-            if(curr_len>max)
-                max=curr_len;
-            pos_table[s[i]]=i;
+            next=next+to_string(count);
+            next=next+prev[pos-1];
+            prev=next;
         }
-        return max;
+        return prev;
     }
 };
+
 
 
 int main(){
@@ -46,6 +51,5 @@ int main(){
     string s1="abcabcbb";
     string s2="bbbbb";
     Solution s;
-    cout<<s.lengthOfLongestSubstring(s1)<<endl;
-    cout<<s.lengthOfLongestSubstring(s2)<<endl;
+    cout<<s.countAndSay(6)<<endl;
 }
