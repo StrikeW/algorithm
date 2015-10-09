@@ -9,67 +9,53 @@
 using namespace std;
 
 
-struct ListNode {
-     int val;
-     ListNode *next;
-     ListNode(int x) : val(x), next(NULL) {}
- };
-
-
 class Solution {
 public:
-    vector<vector<vector<int> > > dp;
-    void compute(vector<int>& numbers,vector<char>& ops,int start,int end){
-        vector<int> result;
-        if(start==end){
-            dp[start][start].push_back(numbers[start]);
-            return ;
-        }
-        // 0 1 2 3
-        // 2*3+4-5
-        for(int mid=start;mid<end;mid++){
-            if(dp[start][mid].size()==0)
-                compute(numbers,ops,start,mid);
-            if(dp[mid+1][end].size()==0)
-                compute(numbers,ops,mid+1,end);
-            for(int i=0;i<dp[start][mid].size();i++){
-                for(int j=0;j<dp[mid+1][end].size();j++){
-                    if(ops[mid]=='+')
-                        dp[start][end].push_back(dp[start][mid][i] + dp[mid+1][end][j]);
-                    else if (ops[mid]=='-')   
-                        dp[start][end].push_back(dp[start][mid][i] - dp[mid+1][end][j]);
-                    else
-                        dp[start][end].push_back(dp[start][mid][i] * dp[mid+1][end][j]);
+    int calculate(string s) {
+        vector<int> nums;
+        vector<char> ops;
+        int i=0;
+        while(i<s.size()){
+            if(s[i]==' '){
+                i++;
+                continue;
+                
+            }
+            if(s[i]=='+' || s[i]=='-' || s[i]=='*' || s[i]=='/'){
+                ops.push_back( s[i]);
+                i++;
+                continue;
+            }
+            int val=0;
+            while(i<s.size() && '0'<=s[i] && s[i] <='9'){
+                val*=10;
+                val+=s[i]-'0';
+                i++;
+            }
+            nums.push_back(val);
+            if(ops.size()>0 && (ops[ops.size()-1]=='*' || ops[ops.size()-1]=='/')){
+                char op=ops[ops.size()-1];
+                ops.pop_back();
+                int second=nums.back();
+                nums.pop_back();
+                int first=nums.back();
+                nums.pop_back();
+                if(op=='*'){
+                    nums.push_back(first*second);
+                } else {
+                    nums.push_back(first/second);
                 }
             }
         }
-    }
-    vector<int> diffWaysToCompute(string input) {
-        //parse the input first
-        vector<int> numbers;
-        vector<char> ops;
-        bool meet_op=false;
-        for(int i=0;i<input.size();i++){
-            if(input[i]=='+'||input[i]=='-'||input[i]=='*'){
-                ops.push_back(input[i]);
-                meet_op=true;
-                continue;
-            }
-            if(i==0 || meet_op){
-                numbers.push_back(input[i]-'0');
+        int result=nums[0];
+        for(int i=0;i<ops.size();i++){
+            if(ops[i]=='+'){
+                result=result+nums[i+1];
             } else {
-                numbers.back()=numbers.back()*10+(input[i]-'0');
+                result=result-nums[i+1];
             }
-            meet_op=false;
         }
-        //calculate
-        dp.clear();
-        dp.resize(numbers.size());
-        for(int i=0;i<dp.size();i++){
-            dp[i].resize(numbers.size());
-        }
-        compute(numbers,ops,0,numbers.size()-1);
-        return dp[0][numbers.size()-1];
+        return result;
     }
 };
 
@@ -81,9 +67,10 @@ int main(){
     //vector<int> v(arr,arr+sizeof(arr)/sizeof(arr[0]));
     
     Solution s;
-    vector<int> result=s.diffWaysToCompute("2*3-4*5");
-    for(int i=0;i<result.size();i++)
-        cout<<result[i]<<endl;
+    cout<<s.calculate("0")<<endl;
+    // vector<int> result=s.diffWaysToCompute("2*3-4*5");
+    // for(int i=0;i<result.size();i++)
+    //     cout<<result[i]<<endl;
 //    cout<<s.threeSum(v).size()<<endl;
 
 
