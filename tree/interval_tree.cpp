@@ -1,7 +1,7 @@
 #include <iostream>
-#include <map>
-
+#include <map> 
 using namespace std;
+
 class interval_set{
 public:
 	map<int,int > range_map;
@@ -73,24 +73,18 @@ public:
 	}
 };
 
+
 int main(){
-	map<int,pair<int,int> > exist_map;
-	int N,M;
-	cin>>N>>M;
 	interval_set s;
-	s.insert(0,M);
-	for(int i=1;i<=N;i++){
-		int val;
-		cin>>val;
-		int start;
-		while(!s.try_malloc(val,&start)){
-			s.insert((exist_map.begin())->second.first,(exist_map.begin())->second.second);
-			exist_map.erase(exist_map.begin());
-		} 
-		exist_map[i]=pair<int,int>(start,start+val);
-	}
-	map<int,pair<int,int> >::iterator iter;
-	for(iter=exist_map.begin();iter!=exist_map.end();iter++){
-		cout<<iter->first<<" "<<iter->second.first<<endl;
-	}
+	s.insert(1,2);
+	s.insert(7,8);
+	s.insert(5,6);
+	s.insert(3,4);
+	//s.print();
+	s.insert(2,5);
+	s.print();
+	int ret;
+	s.try_malloc(3,&ret);
+	s.print();
+
 }

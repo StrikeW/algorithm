@@ -49,7 +49,39 @@ void my_obj_set(){
 	}
 }
 
-int main(){
-	basic();
-	//my_obj_set();
+void bound(){
+	// lower_bound(i) : first element >= i;
+	// up_bound(i)    : first element >  i;
+	set<int> s;
+	s.insert(1);
+	s.insert(2);
+	s.insert(4);
+	s.insert(5);
+	
+	set<int>::iterator it;
+	it = s.lower_bound (2);
+	cout<< *it<<endl;
+	it = s.lower_bound (3);
+	cout<< *it<<endl;
+	it = s.lower_bound (4);
+	cout<< *it<<endl;
+	cout<<"~~~~~~~~"<<endl;
+	it = s.upper_bound (2);
+	cout<< *it<<endl;
+	it = s.upper_bound (3);
+	cout<< *it<<endl;
+	it = s.upper_bound (6);
+	if(it==s.end())
+		cout<<"END of set"<<endl;
+	else
+		cout<< *it;
 }
+int main(){
+	//basic();
+	//my_obj_set();
+	bound();
+}
+
+
+
+
