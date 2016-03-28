@@ -11,63 +11,40 @@
 #include <set>
 #include <map>
 #define CLR(a, b) memset(a, b, sizeof(a))
-
 using namespace std;
 
-int get_gcd(int a,int b){
-	if(a<b){
-		swap(a,b);
-	}
-	if(a%b==0){
-		return b;
-	}
-	return get_gcd(a-b,b);
-}
-int gcd[101][101];
-int dp[101][101][51];
-int cal(int i,int n,int m){
-	if(dp[i][n][m]!=-1){
-		return dp[i][n][m];
-	}
-	if(n==0){
-		if(m==1){
-			dp[i][n][m]=1;
-		} else {
-			dp[i][n][m]=0;
-		}
-		return dp[i][n][m];	
-	} else if(n<=i){
-		dp[i][n][m]=0;
-		return dp[i][n][m];	
-	}
-	dp[i][n][m]=0;
-	for(int first=i+1;first<=n;first++){
-		//first
-		//n-first
-		// m/gcd(m,n-first)
-		dp[i][n][m]+=cal(first,n-first , m/gcd[m][first]);
-	}
-	dp[i][n][m]%= 1000000007;
-	return dp[i][n][m];
-}
 
-//1 6 2
-    // 2	4	1 
-	// 3	3	2 0
 int main(){
-	int N,M;
-	cin>>N>>M;
-	CLR(dp, -1);
-	for(int i=1;i<101;i++){
-		for(int j=1;j<101;j++){
-			gcd[i][j]=get_gcd(i,j);
-		}
-	}
-	cout<<cal(0,N,M)<<endl;
-	//dp[0][N][M];
-	//first number should larger than 0;
-	
+	double X,Y,r;
+	cin>>X>>Y>>r;
 
+	double max_dis=-1;
+	int max_x;
+	int max_y;
+	for(int a=X-r-1;a<=X+r+1;a++){
+		if(r*r-(a-X)*(a-X)<0){
+			continue;
+		}
+		double tmp=sqrt(r*r-(a-X)*(a-X));
+		int b[6]={Y+tmp-1,Y+tmp,Y+tmp+1,Y-tmp-1,Y-tmp,Y-tmp+1};
+		for(int i=0;i<6;i++){
+			double dis=(a-X)*(a-X) + (b[i]-Y)*(b[i]-Y);
+			if( dis > r*r || dis<max_dis){
+				continue;
+			}
+			if(dis>max_dis){
+				max_dis=dis;
+				max_x=a;
+				max_y=b[i];
+			} else if(dis == max_dis){
+				if(a>max_x || (a==max_x && b[i]>max_y)){
+					max_x=a;
+					max_y=b[i];
+				}
+			}
+		}	
+	}
+	cout<<max_x<<" "<<max_y<<endl;
 }
 
 
