@@ -6,7 +6,6 @@ using namespace std;
 //  3   4    5     6
 //  7 8 9 10 11 12 13 14
 class myheap{ // min_heap
-    vector<int> data;
     void shift_up(){
         //after insert a new element to the tail of data
         //we need to shift up
@@ -21,11 +20,10 @@ class myheap{ // min_heap
             }
         }
     }
-    void shift_down(){
+    void shift_down(int idx){
         if(data.size()<=1){
             return ;
         }
-        int idx=0;
         while(true){
             int left_idx=idx*2+1;
             int right_idx=idx*2+2;
@@ -45,6 +43,7 @@ class myheap{ // min_heap
         }
     }
 public:
+    vector<int> data;
     int size(){
         return data.size();
     }
@@ -56,8 +55,13 @@ public:
         int ret=data[0];
         data[0]=data[data.size()-1];
         data.pop_back();
-        shift_down();
+        shift_down(0);
         return ret;
+    }
+    void make_heap(){
+        for(int i=data.size()/2;i>=0;i--){
+            shift_down(i);
+        }
     }
 };
 
@@ -67,9 +71,11 @@ int main(){
     int a_len=sizeof(a)/sizeof(a[0]);
     vector<int> v(a,a+a_len);
     myheap mheap;
-    for(int i=0;i<v.size();i++){
-        mheap.push(v[i]);
-    }
+    mheap.data=v;
+    mheap.make_heap();
+    // for(int i=0;i<v.size();i++){
+    //     mheap.push(v[i]);
+    // }
     while(mheap.size()>0){
         cout<<mheap.pop()<<" ";
     }
