@@ -4,6 +4,7 @@
 using namespace std;
 /*
 	O(n^2)
+	每次加入一个新的顶点
 */
 struct edge{
 	int dst;

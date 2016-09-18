@@ -53,5 +53,13 @@ void point_queue(){
 }
 
 int main(){
-	point_queue();
+	priority_queue<int> int_queue;
+	int_queue.push(1);
+	int_queue.push(3);
+	int_queue.push(2);
+	while(int_queue.size()>0){
+		cout<<int_queue.top()<<endl;
+		int_queue.pop();
+	}	
+//	point_queue();
 }

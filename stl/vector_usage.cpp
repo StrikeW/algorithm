@@ -34,7 +34,34 @@ void sort(){
 		cout<<v2[i]<<endl;
 }
 
+void delete_val(vector<int>& vec,int val){
+	for(vector<int>::iterator iter= vec.begin();iter!=vec.end(); ){
+		if(*iter==val){
+			iter=vec.erase(iter);
+		} else {
+			iter++;
+		}
+	}
+}
+void delete_elelemt(){
+	int a[] = {1,2,3,3,3,4,5,6,7};
+	int a_len=sizeof(a)/sizeof(a[0]);
+	vector<int> vec(a,a+a_len);
+	for(vector<int>::iterator iter= vec.begin();iter!=vec.end(); ){
+		if(*iter==3){
+			iter=vec.erase(iter);
+		} else {
+			iter++;
+		}
+	}
+	for(vector<int>::iterator iter= vec.begin();iter!=vec.end(); iter++){
+		cout<<*iter<<" ";
+	}
+	cout<<endl;
+}
+
 int main(){
 	//init();
-	sort();
+	//sort();
+	delete_elelemt();
 }

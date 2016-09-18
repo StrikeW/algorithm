@@ -18,6 +18,9 @@ using namespace std;
 #define INF 0x3f3f3f3f
 #define CLR(a, b) memset(a, b, sizeof(a))
 
+/// INT_MAX = 2147483647  , 10^9 <  INT_MAX  <  10^10 
+///  10^18 <  LONG_LONG_MAX  <  10^19 
+
 void eqmin(int &x, int y)
 {
     x = min(x, y);
@@ -25,5 +28,5 @@ void eqmin(int &x, int y)
 
 
 int main(){
-
+	cout.sync_with_stdio(false);
 }
